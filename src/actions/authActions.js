@@ -5,7 +5,8 @@ import {
   LOGIN_USER,
   LOGIN_USER_FAIL,
   LOGIN_USER_SUCCESS,
-  LOGOUT_USER
+  LOGOUT_USER,
+  RESET_LOCATIONS
 } from "./types";
 
 export const logoutUser = () => {
@@ -13,7 +14,10 @@ export const logoutUser = () => {
     firebase
       .auth()
       .signOut()
-      .then(() => dispatch({ type: LOGOUT_USER }));
+      .then(() => {
+        dispatch({ type: LOGOUT_USER });
+        dispatch({ type: RESET_LOCATIONS });
+      });
   };
 };
 
