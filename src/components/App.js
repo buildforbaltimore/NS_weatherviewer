@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import Header from "./headerComponents/Header";
 import firebase from "firebase/app";
+import Header from "./headerComponents/Header";
+import Viewer from "./viewerComponents/Viewer";
 
 class App extends Component {
   componentDidMount() {
@@ -21,7 +22,7 @@ class App extends Component {
       <div>
         <Header />
         <div className="container">
-          <h1>Body</h1>
+          <Viewer />
         </div>
         <div>
           <h1>Footer</h1>

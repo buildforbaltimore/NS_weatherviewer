@@ -1,15 +1,23 @@
 import firebase from "firebase/app";
 import "firebase/auth";
-import { initNewUserLocations } from "./locationActions";
+import "firebase/database";
 import {
   LOGIN_USER,
   LOGIN_USER_FAIL,
   LOGIN_USER_SUCCESS,
-  INIT_NEW_USER_LOCATIONS
+  LOGOUT_USER
 } from "./types";
 
+export const logoutUser = () => {
+  return dispatch => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => dispatch({ type: LOGOUT_USER }));
+  };
+};
+
 export const loginUser = ({ email, password }) => {
-  console.log(firebase);
   return dispatch => {
     dispatch({ type: LOGIN_USER });
 
@@ -40,9 +48,21 @@ const loginUserSuccess = (dispatch, user) => {
 };
 
 const createUserSuccess = (dispatch, user) => {
-  dispatch({
-    type: LOGIN_USER_SUCCESS,
-    payload: user
-  });
-  dispatch(initNewUserLocations());
+  // Add initial locations to database
+  const defaultLocs = {
+    0: "Denver, CO",
+    1: "New York City, NY",
+    2: "Austin, TX"
+  };
+
+  firebase
+    .database()
+    .ref(`/users/${user.user.uid}/locations`)
+    .set(defaultLocs)
+    .then(() => {
+      dispatch({
+        type: LOGIN_USER_SUCCESS,
+        payload: user
+      });
+    });
 };

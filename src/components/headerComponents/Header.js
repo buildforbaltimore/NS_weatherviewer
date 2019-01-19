@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Icon } from "react-materialize";
 import LoginBar from "./LoginBar";
+import LocationTabs from "./LocationTabs";
 
 class Header extends Component {
   renderAddButton = () => {
@@ -15,19 +16,30 @@ class Header extends Component {
     return;
   };
 
+  renderLocationTabs = () => {
+    if (this.props.isSignedIn) {
+      return <LocationTabs />;
+    }
+    return;
+  };
+
   render() {
     return (
-      <div className="container">
-        <LoginBar />
+      <div>
+        <div className="container">
+          <LoginBar />
 
-        <h1>WeatherViewer</h1>
+          <h1>WeatherViewer</h1>
 
-        <div className="headerButtons">
-          {this.renderAddButton()}
-          <Button waves="light" className="blue">
-            Search<Icon right>search</Icon>
-          </Button>
+          <div className="headerButtons">
+            {this.renderAddButton()}
+            <Button waves="light" className="blue">
+              Search<Icon right>search</Icon>
+            </Button>
+          </div>
         </div>
+
+        {this.renderLocationTabs()}
       </div>
     );
   }
