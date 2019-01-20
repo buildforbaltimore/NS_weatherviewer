@@ -1,32 +1,54 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchUserLocations } from "../../actions";
+import { fetchUserLocations, selectLocation } from "../../actions";
 import { Tabs, Tab } from "react-materialize";
 
 class LocationTabs extends Component {
   componentDidMount() {
     this.props.fetchUserLocations();
+    this.tabsRef = React.createRef();
+  }
+  shouldComponentUpdate() {
+    if (this.tabsRef.current === null) {
+      return true;
+    }
+    return false;
   }
 
+  selectTab = tab => {
+    this.props.selectLocation(tab.firstChild.innerHTML);
+  };
+
   renderTabs() {
-    if (this.props.locs.length !== 0) {
-      const tabs = this.props.locs.map((loc, index) => {
+    const { locs, selectedLoc } = this.props;
+
+    if (locs.length !== 0) {
+      const tabs = locs.map((loc, index) => {
         return (
-          <Tab title={loc} key={index}>
-            {loc}
+          <Tab
+            title={loc}
+            key={index}
+            active={selectedLoc === loc ? true : false}
+          >
+            <span hidden>{loc}</span>
           </Tab>
         );
       });
-      return <Tabs>{tabs}</Tabs>;
+      return (
+        <Tabs
+          ref={ref => (this.tabsRef = ref)}
+          tabOptions={{ onShow: this.selectTab }}
+        >
+          {tabs}
+        </Tabs>
+      );
     }
   }
 
   render() {
     return (
       <div className="row white">
-        <div className="col s12 l10 offset-l1">
-          <div>{this.renderTabs()}</div>
-        </div>
+        <div className="col s12 l10 offset-l1">{this.renderTabs()}</div>
       </div>
     );
   }
@@ -35,11 +57,11 @@ class LocationTabs extends Component {
 const mapStateToProps = state => {
   return {
     locs: Object.values(state.locations.locs),
-    locsLoading: state.locations.loading
+    selectedLoc: state.weather.location
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchUserLocations }
+  { fetchUserLocations, selectLocation }
 )(LocationTabs);
