@@ -6,4 +6,8 @@ body * {
 .modal.bottom-sheet {
   max-height: 100%;
 }
-/* LoginBar */
+/* /LoginBar */
+
+.inputError {
+  color: red;
+}

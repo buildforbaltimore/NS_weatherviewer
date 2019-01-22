@@ -1,7 +1,7 @@
 import { SELECT_LOCATION } from "../actions/types";
 
 const INITIAL_STATE = {
-  location: ""
+  location: {}
 };
 
 export default (state = INITIAL_STATE, action) => {

@@ -54,9 +54,21 @@ const loginUserSuccess = (dispatch, user) => {
 const createUserSuccess = (dispatch, user) => {
   // Add initial locations to database
   const defaultLocs = {
-    0: "Denver, CO",
-    1: "New York City, NY",
-    2: "Austin, TX"
+    0: {
+      name: "Denver, CO",
+      lat: 39.7392358,
+      long: -104.990251
+    },
+    1: {
+      name: "New York City, NY",
+      lat: 40.7127753,
+      long: -74.0059728
+    },
+    2: {
+      name: "Austin, TX",
+      lat: 30.267153,
+      long: -97.74306079999999
+    }
   };
 
   firebase

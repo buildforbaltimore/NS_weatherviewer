@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button, Icon } from "react-materialize";
 import LoginBar from "./LoginBar";
+import SearchBar from "./SearchBar";
 import LocationTabs from "./LocationTabs";
 
 class Header extends Component {
@@ -18,11 +18,7 @@ class Header extends Component {
         <div className="container">
           <LoginBar />
           WeatherViewer
-          <div className="headerButtons">
-            <Button waves="light" className="blue">
-              Search<Icon right>search</Icon>
-            </Button>
-          </div>
+          <SearchBar />
         </div>
 
         {this.renderLocationTabs()}

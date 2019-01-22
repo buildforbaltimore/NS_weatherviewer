@@ -16,7 +16,7 @@ class LocationTabs extends Component {
   }
 
   selectTab = tab => {
-    this.props.selectLocation(tab.firstChild.innerHTML);
+    this.props.selectLocation(this.props.locs[tab.substr(1)]);
   };
 
   renderTabs() {
@@ -26,19 +26,14 @@ class LocationTabs extends Component {
       const tabs = locs.map((loc, index) => {
         return (
           <Tab
-            title={loc}
+            title={loc.name}
             key={index}
-            active={selectedLoc === loc ? true : false}
-          >
-            <span hidden>{loc}</span>
-          </Tab>
+            active={selectedLoc === loc.name ? true : false}
+          />
         );
       });
       return (
-        <Tabs
-          ref={ref => (this.tabsRef = ref)}
-          tabOptions={{ onShow: this.selectTab }}
-        >
+        <Tabs ref={ref => (this.tabsRef = ref)} onChange={this.selectTab}>
           {tabs}
         </Tabs>
       );
