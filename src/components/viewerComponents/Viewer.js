@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { TimelineSection } from "./TimelineSection";
+import CurrentWeather from "./CurrentWeather";
+import TimelineSection from "./TimelineSection";
 
 class Viewer extends Component {
   render() {
-    const { name, lat, long } = this.props.selectedLoc;
-    const { minutely, hourly, daily } = this.props.weather;
+    const { currently, minutely, hourly, daily } = this.props.weather;
 
     return (
       <div>
-        <h3>{name}</h3>
-        <p className="center-align">
-          Lat: {lat}, Long: {long}
-        </p>
-        {/* <TimelineSection sliderMax={minutely.data.length - 1} /> */}
+        <CurrentWeather location={this.props.selectedLoc} weather={currently} />
+
+        <div className="container">
+          <TimelineSection rangeMax={minutely.data.length - 1} />
+        </div>
       </div>
     );
   }

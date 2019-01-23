@@ -1,13 +1,12 @@
 import React from "react";
+import Range from "./Range";
 
-const TimelineSection = () => {
+const TimelineSection = props => {
   return (
     <div>
-      <p class="range-field">
-        <input type="range" id="test5" min="0" max="100" />
-      </p>
+      <Range max={props.rangeMax} />
     </div>
   );
 };
 
-export { TimelineSection };
+export default TimelineSection;

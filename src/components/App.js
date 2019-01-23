@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Preloader } from "react-materialize";
 import { selectLocation, fetchWeather } from "../actions/weatherActions";
 import firebase from "firebase/app";
+import { geoLocate } from "./geoLocate";
 import Header from "./headerComponents/Header";
 import Viewer from "./viewerComponents/Viewer";
 
@@ -18,48 +20,23 @@ class App extends Component {
     };
     firebase.initializeApp(config);
 
-    this.geoLocate();
-  }
-
-  geoLocate = () => {
-    const getLocWeather = () => {
+    const getLocWeather = newLoc => {
       this.props.selectLocation(newLoc);
       this.props.fetchWeather(newLoc);
     };
 
-    const fallBack = {
-      lat: 39.7392358,
-      long: -104.990251,
-      name: "Denver, CO"
-    };
-
-    let newLoc = {};
-
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        function success(position) {
-          newLoc = {
-            lat: position.coords.latitude,
-            long: position.coords.longitude,
-            name: "Your current location"
-          };
-          getLocWeather(newLoc);
-        },
-        function error(error_message) {
-          // for when getting location results in an error
-          getLocWeather(fallBack);
-        }
-      );
-    } else {
-      getLocWeather(fallBack);
-    }
-  };
+    geoLocate(getLocWeather);
+  }
 
   renderViewer = () => {
-    if (!this.props.location) {
-      return;
+    if (!this.props.loading) {
+      return <Viewer />;
     }
-    return <Viewer />;
+    return (
+      <div className="center-align">
+        <Preloader size="big" />
+      </div>
+    );
   };
 
   render() {
@@ -74,7 +51,9 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  return { location: state.weather.location };
+  return {
+    loading: state.weather.loading
+  };
 };
 
 export default connect(
