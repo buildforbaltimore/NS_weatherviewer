@@ -13,3 +13,4 @@ export const DELETE_USER_LOCATION = "DELETE_USER_LOCATION";
 
 // Weather Action Types
 export const SELECT_LOCATION = "SELECT_LOCATION";
+export const FETCH_WEATHER = "FETCH_WEATHER";

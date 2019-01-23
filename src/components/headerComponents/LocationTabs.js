@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchUserLocations, selectLocation } from "../../actions";
+import { fetchUserLocations } from "../../actions";
+import { selectLocation, fetchWeather } from "../../actions/weatherActions";
 import { Tabs, Tab } from "react-materialize";
 
 class LocationTabs extends Component {
@@ -16,7 +17,9 @@ class LocationTabs extends Component {
   }
 
   selectTab = tab => {
-    this.props.selectLocation(this.props.locs[tab.substr(1)]);
+    const newLoc = this.props.locs[tab.substr(1)];
+    this.props.selectLocation(newLoc);
+    this.props.fetchWeather(newLoc);
   };
 
   renderTabs() {
@@ -42,7 +45,7 @@ class LocationTabs extends Component {
 
   render() {
     return (
-      <div className="row white">
+      <div className="row white" style={{ marginBottom: "0" }}>
         <div className="col s12 l10 offset-l1">{this.renderTabs()}</div>
       </div>
     );
@@ -58,5 +61,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchUserLocations, selectLocation }
+  { fetchUserLocations, selectLocation, fetchWeather }
 )(LocationTabs);

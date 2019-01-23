@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { selectLocation } from "../../actions";
-import { Row, Icon, Button, Col } from "react-materialize";
+import { selectLocation, fetchWeather } from "../../actions/weatherActions";
+import { Icon, Button } from "react-materialize";
+import "../../css/SearchBar.css";
 
 class SearchBar extends Component {
   state = { searchError: false, searchText: "" };
 
-  onSearchSubmit = () => {
+  onSearchSubmit = e => {
+    e.preventDefault();
+
     if (!this.state.searchText) {
       return this.setState({
         searchError: "Please enter a location to search."
@@ -26,13 +29,15 @@ class SearchBar extends Component {
           });
         }
         const { lat, lng } = result.results[0].geometry.location;
-
-        this.setState({ searchError: "" });
-        this.props.selectLocation({
+        const newLoc = {
           lat,
           long: lng,
           name: this.state.searchText
-        });
+        };
+
+        this.setState({ searchError: "" });
+        this.props.selectLocation(newLoc);
+        this.props.fetchWeather(newLoc);
       })
       .catch(err =>
         this.setState({
@@ -43,33 +48,38 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSearchSubmit}>
-        <Row>
-          <div className="input-field col s12 m6">
-            <Icon className="prefix">search</Icon>
-            <input
-              className={`${this.state.searchError ? "invalid" : ""}`}
-              value={this.state.searchText}
-              onChange={e => this.setState({ searchText: e.target.value })}
-              type="text"
-              placeholder="Enter a location to search (eg. City, State)"
-              autoComplete="off"
-            />
-            <span className="helper-text" data-error={this.state.searchError} />
-          </div>
+      <div className="searchFormWrapper">
+        <form onSubmit={this.onSearchSubmit}>
+          <div className="row">
+            <div className="input-field col s12 m10">
+              <Icon className="prefix">search</Icon>
+              <input
+                className={`${this.state.searchError ? "invalid" : ""}`}
+                value={this.state.searchText}
+                onChange={e => this.setState({ searchText: e.target.value })}
+                type="text"
+                placeholder="Enter a location (eg. City, State)"
+                autoComplete="off"
+              />
+              <span
+                className="helper-text"
+                data-error={this.state.searchError}
+              />
+            </div>
 
-          <Col s={12} m={6}>
-            <Button waves="light">
-              Search<Icon left>search</Icon>
-            </Button>
-          </Col>
-        </Row>
-      </form>
+            <div className="col s12 m2">
+              <Button waves="light">
+                Search<Icon left>search</Icon>
+              </Button>
+            </div>
+          </div>
+        </form>
+      </div>
     );
   }
 }
 
 export default connect(
   null,
-  { selectLocation }
+  { selectLocation, fetchWeather }
 )(SearchBar);

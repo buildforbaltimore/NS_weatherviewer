@@ -2,12 +2,11 @@ body * {
   font-family: "Exo 2", sans-serif;
 }
 
-/* LoginBar */
-.modal.bottom-sheet {
-  max-height: 100%;
-}
-/* /LoginBar */
-
-.inputError {
-  color: red;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-align: center;
 }

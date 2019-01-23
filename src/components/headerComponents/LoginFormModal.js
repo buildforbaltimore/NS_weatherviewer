@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Button, Icon, Modal, Row, Col, Preloader } from "react-materialize";
 import { loginUser } from "../../actions";
+import "../../css/LoginFormModal.css";
 
 class LoginFormModal extends Component {
   renderInput = ({ input, label, type, meta }) => {
@@ -70,19 +71,17 @@ class LoginFormModal extends Component {
 
   render() {
     return (
-      <div>
-        <Modal
-          header="Login/Sign Up"
-          bottomSheet
-          trigger={
-            <Button waves="light" className="green">
-              Log In<Icon left>account_circle</Icon>
-            </Button>
-          }
-        >
-          <div className="container">{this.renderModalContent()}</div>
-        </Modal>
-      </div>
+      <Modal
+        header="Login/Sign Up"
+        bottomSheet
+        trigger={
+          <Button waves="light" className="green">
+            Log In<Icon left>account_circle</Icon>
+          </Button>
+        }
+      >
+        <div className="container">{this.renderModalContent()}</div>
+      </Modal>
     );
   }
 }
