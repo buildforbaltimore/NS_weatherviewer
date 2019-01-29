@@ -9,7 +9,8 @@ const CurrentWeatherBG = props => {
       style={{
         backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
-        backgroundRepeat: "no-repeat"
+        backgroundRepeat: "no-repeat",
+        backgbroundPosition: "center"
       }}
     >
       {props.children}

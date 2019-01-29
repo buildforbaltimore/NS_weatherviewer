@@ -5,11 +5,17 @@ import TimelineSection from "./TimelineSection";
 
 class Viewer extends Component {
   render() {
-    const { currently, minutely, hourly, daily } = this.props.weather;
+    const { currently, minutely, hourly, daily, alerts } = this.props.weather;
 
     return (
       <div>
-        <CurrentWeather location={this.props.selectedLoc} weather={currently} />
+        <CurrentWeather
+          location={this.props.selectedLoc}
+          currently={currently}
+          daily={daily}
+          hourly={hourly}
+          alerts={alerts}
+        />
 
         <div className="container">
           <TimelineSection rangeMax={minutely.data.length - 1} />

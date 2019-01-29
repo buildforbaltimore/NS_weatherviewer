@@ -25,7 +25,7 @@ class Header extends Component {
               <SearchBar />
             </div>
           </div>
-          <h2>WeatherViewer</h2>
+          <h2 style={{ margin: "0" }}>WeatherViewer</h2>
         </div>
 
         {this.renderLocationTabs()}

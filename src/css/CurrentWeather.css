@@ -1,0 +1,13 @@
+.halfOpaque {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.weatherAlerts .collapsible {
+  margin: 0;
+  border: none;
+}
+.weatherAlerts .collapsible-header {
+  background-color: rgb(166, 0, 0);
+  border: none;
+  border-bottom: 1px solid black;
+}
